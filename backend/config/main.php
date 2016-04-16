@@ -9,13 +9,15 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'controllerNamespace' => 'backend\controllers',
     'modules' => [],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'idParam' => '__id_backend',
+            'identityCookie' => ['name' => '_identity_backend'],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -28,6 +30,12 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+        ],
+        'request' => [
+            'csrfParam' => '_csrf_backend',
+        ],
+        'session' => [
+            'name' => 'BACKEND_SESSID',
         ],
         /*
         'urlManager' => [

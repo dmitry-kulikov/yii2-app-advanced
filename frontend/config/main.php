@@ -15,6 +15,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'idParam' => '__id_frontend',
+            'identityCookie' => ['name' => '_identity_frontend'],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -27,6 +29,12 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+        ],
+        'request' => [
+            'csrfParam' => '_csrf_frontend',
+        ],
+        'session' => [
+            'name' => 'FRONTEND_SESSID',
         ],
         /*
         'urlManager' => [
