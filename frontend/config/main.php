@@ -17,6 +17,7 @@ return [
             'enableAutoLogin' => true,
             'idParam' => '__id_frontend',
             'identityCookie' => ['name' => '_identity_frontend'],
+            'acceptableRedirectTypes' => ['*/*', 'text/html', 'application/xhtml+xml'],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
