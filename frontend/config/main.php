@@ -16,7 +16,7 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'idParam' => '__id_frontend',
-            'identityCookie' => ['name' => '_identity_frontend'],
+            'identityCookie' => ['name' => '_identity_frontend', 'httpOnly' => true],
             'acceptableRedirectTypes' => ['*/*', 'text/html', 'application/xhtml+xml'],
         ],
         'log' => [
