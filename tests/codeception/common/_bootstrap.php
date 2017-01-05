@@ -13,6 +13,3 @@ $_SERVER['SERVER_NAME'] = 'localhost';
 $_SERVER['SERVER_PORT'] = '80';
 
 Yii::setAlias('@tests', dirname(dirname(__DIR__)));
-
-// do not use deep clone to prevent performance issue with Codeception 2.1.*
-\Codeception\Specify\Config::setDeepClone(false);
