@@ -4,5 +4,7 @@ modules:
         - WebDriver:
             url: http://localhost:8080
             browser: firefox
+            capabilities:
+                marionette: true
         - Yii2:
             part: init
