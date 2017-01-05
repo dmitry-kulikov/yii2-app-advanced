@@ -302,7 +302,7 @@ function getStyleCode($name)
  */
 function formatMessage($message, $styles)
 {
-    if (empty($styles) || !stylizationSupported()) {
+    if (empty($styles) || !ansiColorsSupported()) {
         return $message;
     }
 
