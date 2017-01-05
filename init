@@ -242,17 +242,16 @@ function printError($message)
 /**
  * Returns true if STDOUT supports stylization.
  * Stylization is disabled for:
- *  -  Windows before 10.0.10586 without Ansicon, ConEmu or Mintty
+ *  -  Windows != 10.0.10586 without Ansicon, ConEmu or Mintty
  *  -  non tty consoles
  * Copied and adapted from Symfony\Component\Console\Output\StreamOutput.
- * @return boolean true if the stream supports stylization, false otherwise.
+ * @return boolean true if STDOUT supports stylization, false otherwise.
  */
 function stylizationSupported()
 {
     if (DIRECTORY_SEPARATOR === '\\') {
         $winVersion = PHP_WINDOWS_VERSION_MAJOR . '.' . PHP_WINDOWS_VERSION_MINOR . '.' . PHP_WINDOWS_VERSION_BUILD;
-        return
-            0 >= version_compare('10.0.10586', $winVersion)
+        return '10.0.10586' === $winVersion
             || false !== getenv('ANSICON')
             || 'ON' === getenv('ConEmuANSI')
             || 'xterm' === getenv('TERM');
@@ -302,7 +301,7 @@ function getStyleCode($name)
  */
 function formatMessage($message, $styles)
 {
-    if (empty($styles) || !ansiColorsSupported()) {
+    if (empty($styles) || !stylizationSupported()) {
         return $message;
     }
 

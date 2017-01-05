@@ -36,6 +36,7 @@ return [
             'csrfParam' => '_csrf_backend',
         ],
         'session' => [
+            // this is the name of the session cookie used for login on the backend
             'name' => 'BACKEND_SESSID',
         ],
         /*

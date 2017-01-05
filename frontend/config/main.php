@@ -35,6 +35,7 @@ return [
             'csrfParam' => '_csrf_frontend',
         ],
         'session' => [
+            // this is the name of the session cookie used for login on the frontend
             'name' => 'FRONTEND_SESSID',
         ],
         /*
