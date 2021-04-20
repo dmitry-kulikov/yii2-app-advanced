@@ -4,25 +4,28 @@ Testing
 Yii2 Advanced Application uses Codeception as its primary test framework. 
 There are already some sample tests prepared in `tests` directory of `frontend`, `backend`, and `common`.
 In order for the following procedure to work, it is assumed that the application has been initialized using
-the `dev` environment. In case tests need to be executed within a `Production` environment, `yii_test` and
+the `dev` environment. In the case where tests need to be executed in a `Production` environment, `yii_test` and
 `yii_test.bat` must be manually copied from the `environments/dev` folder into the project root directory.
+
 Tests require an **additional database**, which will be cleaned up between tests.
-Create database `yii2advanced_test` in mysql (according to config in `common/config/test.php`) and execute: 
+This database will be used to hold data that matches the data in your live
+database. Its purpose is to run those tests that store data without affecting your own data.
+Create database in your database server, using a similar setup to the live database, so that the tests
+are run in an environment that is as close to your live environment as possible.
 
-```
-./yii_test migrate
-```
-
-Build the test suite:
-
-```
-composer exec codecept build
-```
+   1. Your live database connection string is probably in `common/config/main-local.php`. It is 
+      something like `'dsn' => 'mysql:host=localhost;dbname=yii2advanced'`. Copy it to 
+      `common/config/test-local.php` and change the `dbname` so it is obvious that it is the 
+      test database: `'dsn' => 'mysql:host=localhost;dbname=yii2advanced_test'`.      
+   2. Create an empty database. In this example it would be `yii2advanced_test` in MySql (according to 
+      config in `common/config/test-local.php`).
+   3. Execute: `./yii_test migrate`.
+   4. Build the test suite: `./vendor/bin/codecept build`
 
 Then all sample tests can be started by running:
 
 ```
-composer exec codecept run
+vendor/bin/codecept run
 ```
 
 You will see output similar to this:
@@ -40,7 +43,7 @@ Tests for common classes are located in `common/tests`. In this template there a
 Execute them by running:
 
 ```
-composer exec codecept run -- -c common 
+vendor/bin/codecept run -- -c common
 ```
 
 `-c` option allows to set path to `codeception.yml` config.
@@ -55,7 +58,7 @@ Frontend tests contain unit tests, functional tests, and acceptance tests.
 Execute them by running:
 
 ```
-composer exec codecept run -- -c frontend
+vendor/bin/codecept run -- -c frontend
 ```
 
 Description of test suites:
@@ -67,6 +70,8 @@ Description of test suites:
 By default acceptance tests are disabled, to run them use:
 
 #### Running Acceptance Tests
+
+The acceptance tests use [geckodriver](https://github.com/mozilla/geckodriver) for firefox by default, so make sure [geckodriver](https://github.com/mozilla/geckodriver) is in the `PATH`.
 
 To execute acceptance tests do the following:  
 
@@ -84,14 +89,17 @@ To execute acceptance tests do the following:
 1. Auto-generate new support classes for acceptance tests:
 
     ```
-    composer exec codecept build -- -c frontend
+    vendor/bin/codecept build -- -c frontend
     ```
 
 1. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
 
     ```
     java -jar ~/selenium-server-standalone-x.xx.x.jar
-    ``` 
+    ```
+    > There are currently [issues](https://github.com/facebook/php-webdriver/issues/492) with geckodriver's
+    > interactions with selenium that require you to enable the protocol translating in Selenium.
+    > `java -jar ~/selenium-server-standalone-x.xx.x.jar -enablePassThrough false`
 
 1. Start web server:
 
@@ -102,7 +110,7 @@ To execute acceptance tests do the following:
 1. Now you can run all available tests
 
    ```
-   composer exec codecept run acceptance -- -c frontend
+   vendor/bin/codecept run acceptance -- -c frontend
    ```
 
 ## Backend
@@ -110,5 +118,5 @@ To execute acceptance tests do the following:
 Backend application contain unit and functional test suites. Execute them by running:
 
 ```
-composer exec codecept run -- -c backend 
+vendor/bin/codecept run -- -c backend
 ```
